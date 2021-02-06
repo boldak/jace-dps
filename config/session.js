@@ -17,9 +17,11 @@ console.log("Sessions:")
 console.log({
   adapter: 'mongo',
   collection: 'sessions',
-  url: process.env.MONGOLAB_URI || process.env.MONGODB_URL || process.env.ATLAS_URL, 
+  url: process.env.MONGOLAB_URI || process.env.MONGODB_URL || process.env.ATLAS_URL || "mongodb://127.0.0.1:27017/dj-sessions", 
 })
 
+let mode = process.env.NODE_ENV || "development"
+console.log(`${mode} session mode` ) 
 
 module.exports.session = {
 
@@ -116,10 +118,10 @@ module.exports.session = {
   *                                                                          *
   ***************************************************************************/
 
-  // username: 'jace',
-  // password: 'jace',
-  auto_reconnect: true,
-  ssl: true,
+  username: (mode == "development") ? undefined : 'jace',
+  password: (mode == "development") ? undefined : 'jace',
+  auto_reconnect: (mode == "development") ? undefined : true,
+  ssl: (mode == "development") ? undefined : true,
   // stringify: true
 
 };

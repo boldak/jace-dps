@@ -41,26 +41,26 @@ module.exports.bootstrap = function (cb) {
   
   // Restore user defined models
 
-  Entities
-    .find({})
-    .then((res) => {
-      sails.log.debug("Restore user defined models:")
-      Promise.all( res.map((model) => {
-          sails.log.debug(`=> ${model.identity}`)
-          return writeFile(   `./api/models/${model.identity}.js`, 
-            `module.exports = ${JSON.stringify(model.model)}`
-          );
-      }))
-      .then((res)=> {
-        sails.log.debug('Reload ORM hook')
-        reloadORM(sails)
-          .then(() => {
-            sails.log.debug('User defined models are restored')
-            cb()
-          })
-          .catch(e => {sails.log.error(e)})
-      })
-    })
+  // Entities
+  //   .find({})
+  //   .then((res) => {
+  //     sails.log.debug("Restore user defined models:")
+  //     Promise.all( res.map((model) => {
+  //         sails.log.debug(`=> ${model.identity}`)
+  //         return writeFile(   `./api/models/${model.identity}.js`, 
+  //           `module.exports = ${JSON.stringify(model.model)}`
+  //         );
+  //     }))
+  //     .then((res)=> {
+  //       sails.log.debug('Reload ORM hook')
+  //       reloadORM(sails)
+  //         .then(() => {
+  //           sails.log.debug('User defined models are restored')
+  //           cb()
+  //         })
+  //         .catch(e => {sails.log.error(e)})
+  //     })
+  //   })
 
   // sails.services.passport.loadStrategies();
 
@@ -82,5 +82,5 @@ module.exports.bootstrap = function (cb) {
   // addDefaultPortalConfig();
   // // It's very important to trigger this callback method when you are finished
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
-  // cb();
+  cb();
 };
